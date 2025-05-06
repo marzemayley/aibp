@@ -1,1 +1,36 @@
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+from typing import List
 
+app = FastAPI()
+
+# Data models
+class ChatRequest(BaseModel):
+    message: str
+
+class ChatResponse(BaseModel):
+    reply: str
+
+class RecommendationRequest(BaseModel):
+    user_id: int
+
+class RecommendationResponse(BaseModel):
+    recommendations: List[str]
+
+# Mock functions
+def chatbot_response(message: str) -> str:
+    return f"You said: {message}. How can I assist you further?"
+
+def get_recommendations(user_id: int) -> List[str]:
+    return [f"Item {i}" for i in range(1, 6)]  # Mock recommendation items
+
+# Routes
+@app.post("/chat", response_model=ChatResponse)
+def chat(request: ChatRequest):
+    reply = chatbot_response(request.message)
+    return {"reply": reply}
+
+@app.post("/recommend", response_model=RecommendationResponse)
+def recommend(request: RecommendationRequest):
+    recommendations = get_recommendations(request.user_id)
+    return {"recommendations": recommendations}
