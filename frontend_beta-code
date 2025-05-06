@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+npm install axios reactimport React, { useState } from "react";
 import axios from "axios";
-
-function App() {
+npm startfunction App(axios APIBETA) {
   const [chatInput, setChatInput] = useState("");
   const [chatResponse, setChatResponse] = useState("");
   const [recommendations, setRecommendations] = useState([]);
