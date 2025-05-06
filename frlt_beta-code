@@ -1,9 +1,9 @@
-from fastapi import FastAPI, HTTPException
+pip install fastapi uvicorn pydanticfrom fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import List
-
+uvicorn main:app --reload
 app = FastAPI()
-
+npm start
 # Data models
 class ChatRequest(BaseModel):
     message: str
