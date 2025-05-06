@@ -1,0 +1,45 @@
+import React, { useState } from "react";
+import axios from "axios";
+
+function App() {
+  const [chatInput, setChatInput] = useState("");
+  const [chatResponse, setChatResponse] = useState("");
+  const [recommendations, setRecommendations] = useState([]);
+
+  const handleChatSubmit = async () => {
+    const response = await axios.post("http://localhost:8000/chat", { message: chatInput });
+    setChatResponse(response.data.reply);
+  };
+
+  const fetchRecommendations = async () => {
+    const response = await axios.post("http://localhost:8000/recommend", { user_id: 1 });
+    setRecommendations(response.data.recommendations);
+  };
+
+  return (
+    <div>
+      <h1>AIPBETA</h1>
+      <div>
+        <h2>Chatbot</h2>
+        <input
+          type="text"
+          value={chatInput}
+          onChange={(e) => setChatInput(e.target.value)}
+        />
+        <button onClick={handleChatSubmit}>Send</button>
+        <p>Response: {chatResponse}</p>
+      </div>
+      <div>
+        <h2>Recommendations</h2>
+        <button onClick={fetchRecommendations}>Get Recommendations</button>
+        <ul>
+          {recommendations.map((item, index) => (
+            <li key={index}>{item}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+}
+
+export default App;
